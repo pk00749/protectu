@@ -16,32 +16,32 @@ import javax.servlet.http.HttpSession;
 public class WebSecurityConfig extends WebMvcConfigurerAdapter {
     public final static String SESSION_KEY = "user";
 
-    @Bean
-    public SecurityInterceptor getSecurityInterceptor(){
-        return new SecurityInterceptor();
-    }
-
-    public void addInterceptors(InterceptorRegistry registry){
-        InterceptorRegistration addInterceptor = registry.addInterceptor(getSecurityInterceptor());
-        addInterceptor.excludePathPatterns("/error");
-        addInterceptor.excludePathPatterns("/login");
-
-        addInterceptor.addPathPatterns("/**");
-    }
-
-    private class SecurityInterceptor extends HandlerInterceptorAdapter {
-
-        @Override
-        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-                throws Exception {
-            HttpSession session = request.getSession();
-            if (session.getAttribute(SESSION_KEY) != null)
-                return true;
-
+//    @Bean
+//    public SecurityInterceptor getSecurityInterceptor(){
+//        return new SecurityInterceptor();
+//    }
+//
+//    public void addInterceptors(InterceptorRegistry registry){
+//        InterceptorRegistration addInterceptor = registry.addInterceptor(getSecurityInterceptor());
+//        addInterceptor.excludePathPatterns("/error");
+//        addInterceptor.excludePathPatterns("/login");
+//
+//        addInterceptor.addPathPatterns("/**");
+//    }
+//
+//    private class SecurityInterceptor extends HandlerInterceptorAdapter {
+//
+//        @Override
+//        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+//                throws Exception {
+//            HttpSession session = request.getSession();
+//            if (session.getAttribute(SESSION_KEY) != null)
+//                return true;
+//
             // 跳转登录
-            String url = "/login";
-            response.sendRedirect(url);
-            return false;
-        }
-    }
+//            String url = "/login";
+//            response.sendRedirect(url);
+//            return false;
+//        }
+//    }
 }
