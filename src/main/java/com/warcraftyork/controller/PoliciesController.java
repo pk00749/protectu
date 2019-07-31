@@ -16,7 +16,7 @@ public class PoliciesController {
 
     @GetMapping("/login")
     public String login(){
-        return "logout.html";
+        return "login";
     }
 
     @RequestMapping("/policies")
