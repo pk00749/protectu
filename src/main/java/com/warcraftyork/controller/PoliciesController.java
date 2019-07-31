@@ -9,6 +9,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class PoliciesController {
 
+    @RequestMapping("/test")
+    public String test(){
+        return "index";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "logout.html";
