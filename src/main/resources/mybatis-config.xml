@@ -79,6 +79,6 @@
      -->
     <!-- 映射文件路径 -->
     <mappers>
-        <mapper resource="com/warcraftyork/mybatisMapper/PoliciesMapper.xml" />
+        <mapper resource="com/warcraftyork/mapper/PoliciesMapper.xml" />
     </mappers>
 </configuration>
