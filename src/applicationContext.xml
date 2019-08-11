@@ -46,7 +46,7 @@
         <!-- 别名 -->
         <!--<property name="typeAliasesPackage" value="com.zhangguo.bookstore.entities" />-->
         <!-- sql映射文件路径 -->
-        <property name="mapperLocations" value="classpath*:com/warcraftyork/mybatisMapper/*.xml" />
+        <property name="mapperLocations" value="classpath*:com/warcraftyork/mapper/*.xml" />
         <!-- 配置 -->
         <property name="configlocation" value="classpath:mybatis-config.xml" />
     </bean>
@@ -56,7 +56,8 @@
         <!--指定会话工厂，如果当前上下文中只定义了一个则该属性可省去 -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
         <!-- 指定要自动扫描接口的基础包，实现接口 -->
-        <property name="basePackage" value="com.warcraftyork.mybatisMapper
+        <property name="basePackage" value="com.warcraftyork.mybatisMapper;
+                                            com.warcraftyork.mapper;
                                             com.warcraftyork.*.*.mapper;" />
     </bean>
 
