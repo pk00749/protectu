@@ -17,7 +17,7 @@
     <!--1 引入属性文件，在配置中占位使用 -->
     <context:property-placeholder location="classpath*:db.properties" />
     <!--2 配置C3P0数据源 -->
-    <bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <!--驱动类名 -->
         <property name="driverClass" value="${jdbc.driver}" />
         <!-- url -->
@@ -26,45 +26,51 @@
         <property name="user" value="${jdbc.uid}" />
         <!-- 密码 -->
         <property name="password" value="${jdbc.pwd}" />
-        <!-- 当连接池中的连接耗尽的时候c3p0一次同时获取的连接数  -->
-        <property name="acquireIncrement" value="5"></property>
-        <!-- 初始连接池大小 -->
-        <property name="initialPoolSize" value="10"></property>
-        <!-- 连接池中连接最小个数 -->
-        <property name="minPoolSize" value="5"></property>
-        <!-- 连接池中连接最大个数 -->
-        <property name="maxPoolSize" value="20"></property>
+        <!--&lt;!&ndash; 当连接池中的连接耗尽的时候c3p0一次同时获取的连接数  &ndash;&gt;-->
+        <!--<property name="acquireIncrement" value="5"></property>-->
+        <!--&lt;!&ndash; 初始连接池大小 &ndash;&gt;-->
+        <!--<property name="initialPoolSize" value="10"></property>-->
+        <!--&lt;!&ndash; 连接池中连接最小个数 &ndash;&gt;-->
+        <!--<property name="minPoolSize" value="5"></property>-->
+        <!--&lt;!&ndash; 连接池中连接最大个数 &ndash;&gt;-->
+        <!--<property name="maxPoolSize" value="20"></property>-->
+    </bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
     </bean>
 
     <!--3 会话工厂bean sqlSessionFactoryBean -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 数据源 -->
-        <property name="dataSource" ref="datasource"></property>
+        <property name="dataSource" ref="dataSource" />
         <!-- 别名 -->
-        <property name="typeAliasesPackage" value="com.zhangguo.bookstore.entities"></property>
+        <!--<property name="typeAliasesPackage" value="com.zhangguo.bookstore.entities" />-->
         <!-- sql映射文件路径 -->
-        <property name="mapperLocations" value="classpath*:com/zhangguo/bookstore/mapper/*Mapper.xml"></property>
+        <property name="mapperLocations" value="classpath*:com/warcraftyork/mybatisMapper/*.xml" />
+        <!-- 配置 -->
+        <property name="configlocation" value="classpath:mybatis-config.xml" />
     </bean>
 
     <!--4 自动扫描对象关系映射 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--指定会话工厂，如果当前上下文中只定义了一个则该属性可省去 -->
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
         <!-- 指定要自动扫描接口的基础包，实现接口 -->
-        <property name="basePackage" value="com.zhangguo.bookstore.mapper"></property>
+        <property name="basePackage" value="com.warcraftyork.mybatisMapper
+                                            com.warcraftyork.*.*.mapper;" />
     </bean>
 
     <!--5 声明式事务管理 -->
     <!--定义事物管理器，由spring管理事务 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="datasource"></property>
+        <property name="dataSource" ref="dataSource" />
     </bean>
     <!--支持注解驱动的事务管理，指定事务管理器 -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!--6 容器自动扫描IOC组件  -->
-    <context:component-scan base-package="com.zhangguo.bookstore"></context:component-scan>
+    <!--<context:component-scan base-package="com.zhangguo.bookstore"></context:component-scan>-->
 
     <!--7 aspectj支持自动代理实现AOP功能 -->
-    <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+    <!--<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>-->
 </beans>
