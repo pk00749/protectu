@@ -4,13 +4,14 @@ import com.warcraftyork.bean.DBInfo;
 import com.warcraftyork.mapper.PoliciesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PoliciesService {
     @Autowired
     private PoliciesMapper policiesMapper;
 
-
+    @Transactional
     public String sayHello(String name){
         if(name == null){
             return "No Name to Select";
