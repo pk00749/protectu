@@ -1,4 +1,5 @@
 from flask import Flask
+# from flask_pymongo import PyMongo
 from config import DevelopmentConfig
 from .main import main as main_blueprint
 from .admin import admin as admin_blueprint
@@ -9,3 +10,5 @@ app.config.from_object(DevelopmentConfig)
 
 app.register_blueprint(main_blueprint)
 app.register_blueprint(admin_blueprint)
+
+# mongo = PyMongo(app)
