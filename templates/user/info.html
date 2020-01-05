@@ -5,7 +5,7 @@
     <title>Insurances</title>
 </head>
 <body>
-<h2>你的保险</h2>
+<h2>你的信息</h2>
 
 <table border="1" cellspacing="0" cellpadding="20">
     <tr>
@@ -15,8 +15,11 @@
     <tr>
         <td>{{i.username}}</td>
         <td>{{i.register_date}}</td>
+        <td><a href="{{ url_for('user_info_delete') }}">Remove</a></td>
+<!--        <button type="submit" >Submit</button>-->
     </tr>
     {% endfor %}
+
     </tr>
 
 </table>

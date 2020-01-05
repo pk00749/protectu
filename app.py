@@ -68,11 +68,17 @@ def insurances():
 def user_info():
     userinfo = []
     for u in db.users.find({}):
-        userDic = {'username':u['username'], 'register_date':u['register_date']}
+        userDic = {'username': u['username'], 'register_date': u['register_date']}
         userinfo.append(userDic)
     for i in userinfo:
         print(i)
     return render_template('/user/info.html', res=userinfo)
+
+
+@app.route('/user/info/delete')
+def user_info_delete():
+    username = ''
+    db.user.remove({'username': username})
 
 
 if __name__ == '__main__':
