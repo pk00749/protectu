@@ -1,6 +1,6 @@
 from flask import *
 from pymongo import MongoClient
-import re
+import re, time
 from datetime import timedelta
 from config import DevelopmentConfig
 
@@ -12,6 +12,7 @@ app.config.from_object(DevelopmentConfig)
 app.config["SECRET_KEY"] = "nothingissecretknow?"
 
 
+@app.route('/')
 @app.route("/user/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -21,7 +22,7 @@ def login():
         password = request.form['password']
         valid_username = db.users.find_one({"username": username})
         session['userlogged'] = True
-        return redirect(url_for('insurances', username=username))
+        return redirect(url_for('user_info', username=username))
 
 
 @app.route('/user/register', methods=['GET', 'POST'])
@@ -32,7 +33,7 @@ def register():
         username = request.form["username"]
         password = request.form['password']
         try:
-            userDet = {'username': username, 'password': password}
+            userDet = {'username': username, 'password': password, 'register_date': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) }
             res = db.users.insert(userDet)
             if res:
                 return redirect(url_for("login"))
@@ -61,6 +62,17 @@ def insurances():
     for u in db.users.find({}):
         username_list.append(u['username'])
     return render_template('/user/insurances.html', u=username_list)
+
+
+@app.route('/user/info')
+def user_info():
+    userinfo = []
+    for u in db.users.find({}):
+        userDic = {'username':u['username'], 'register_date':u['register_date']}
+        userinfo.append(userDic)
+    for i in userinfo:
+        print(i)
+    return render_template('/user/info.html', res=userinfo)
 
 
 if __name__ == '__main__':
