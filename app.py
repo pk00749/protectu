@@ -1,7 +1,5 @@
 from flask import *
 from pymongo import MongoClient
-from flask_wtf import FlaskForm
-from wtforms import StringField
 import re
 from datetime import timedelta
 from config import DevelopmentConfig
@@ -59,10 +57,10 @@ def home():
 
 @app.route('/user/insurances')
 def insurances():
+    username_list = []
     for u in db.users.find({}):
-        print(u)
-        # print(jsonify(u))
-    return render_template('/user/insurances.html', u=u)
+        username_list.append(u['username'])
+    return render_template('/user/insurances.html', u=username_list)
 
 
 if __name__ == '__main__':
