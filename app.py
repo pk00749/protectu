@@ -1,5 +1,7 @@
 from flask import *
 from pymongo import MongoClient
+from flask_wtf import FlaskForm
+from wtforms import StringField
 import re
 from datetime import timedelta
 from config import DevelopmentConfig
@@ -11,6 +13,7 @@ app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 app.config["SECRET_KEY"] = "nothingissecretknow?"
 
+
 @app.route("/user/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -20,7 +23,7 @@ def login():
         password = request.form['password']
         valid_username = db.users.find_one({"username": username})
         session['userlogged'] = True
-        return redirect(url_for('home', username=username))
+        return redirect(url_for('insurances', username=username))
 
 
 @app.route('/user/register', methods=['GET', 'POST'])
@@ -41,6 +44,12 @@ def register():
             return redirect(url_for('home'))
 
 
+@app.route('/user/logout')
+def logout():
+    session.pop('userlogged')
+    return redirect('/home')
+
+
 @app.route('/home')
 def home():
     # TODO: show user name
@@ -48,10 +57,12 @@ def home():
     return render_template('/user/login.html', username=username)
 
 
-@app.route('/user/logout')
-def logout():
-    session.pop('userlogged')
-    return redirect('/home')
+@app.route('/user/insurances')
+def insurances():
+    for u in db.users.find({}):
+        print(u)
+        # print(jsonify(u))
+    return render_template('/user/insurances.html', u=u)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insurances</title>
+</head>
+<body>
+<h2>你的保险</h2>
+<hr>
+{% block page_content %}
+<table border="1" cellspacing="0" cellpadding="20">
+    <tr>
+    <th>User</th>
+    <th>Password</th>
+    </tr>
+    {% for i in u %}
+    <tr>
+        <td>{{i[1]}}</td>
+        <td>{{i[2]}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+</body>
+</html>
