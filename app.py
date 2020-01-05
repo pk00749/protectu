@@ -20,7 +20,7 @@ def login():
         password = request.form['password']
         valid_username = db.users.find_one({"username": username})
         session['userlogged'] = True
-        return redirect(url_for('home'))
+        return redirect(url_for('home', username=username))
 
 
 @app.route('/user/register', methods=['GET', 'POST'])
@@ -40,10 +40,13 @@ def register():
         except:
             return redirect(url_for('home'))
 
+
 @app.route('/home')
 def home():
-    username = 'york'
+    # TODO: show user name
+    username = 'vip'
     return render_template('/user/login.html', username=username)
+
 
 @app.route('/user/logout')
 def logout():
