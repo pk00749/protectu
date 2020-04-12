@@ -1,2 +1,14 @@
-from app import app
-app.run(host='localhost', debug=True)
+# from app import app
+# app.run(host='localhost', debug=True)
+
+from flask import Flask, render_template
+
+app = Flask(__name__, static_folder="./dist/static", template_folder="./dist")
+
+
+@app.route('/')
+def index():
+    return
+
+
+render_template("index.html")
